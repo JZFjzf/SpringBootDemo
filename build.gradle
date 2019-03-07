@@ -16,18 +16,26 @@ sourceCompatibility = '1.8'
 //}
 
 repositories {
-    maven {url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     maven { url 'https://maven.aliyun.com/repository/central' }
     mavenCentral()
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    //Redis session 共享
     implementation 'org.springframework.session:spring-session-data-redis'
     runtimeOnly 'mysql:mysql-connector-java'
+    //lombok 代码简化
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    //分页
     implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.10'
+    //mybatis封装
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.1.0'
+    //代码生成器
+    implementation 'com.baomidou:mybatis-plus-generator:3.1.0'
+    implementation 'org.apache.velocity:velocity:1.7'
+
 }
