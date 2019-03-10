@@ -16,6 +16,9 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.http.converter.xml.SourceHttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Collections;
@@ -26,6 +29,7 @@ import java.util.List;
  * @since 2019/3/8
  */
 @Configuration
+@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
     @Bean
     public Gson gson() {
@@ -57,5 +61,12 @@ public class WebConfig implements WebMvcConfigurer {
         converters.add(gsonHttpMessageConverter);
     }
 
-
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        InterceptorRegistration interceptor = registry.addInterceptor(new SecurityInterceptor());
+        // 配置拦截的路径
+        interceptor.addPathPatterns("/**");
+        // 配置不拦截的路径
+        interceptor.excludePathPatterns("**/swagger-ui.html");
+    }
 }

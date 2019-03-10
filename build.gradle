@@ -9,12 +9,6 @@ group = 'com.choimroc'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-//configurations {
-//    compileOnly {
-//        extendsFrom annotationProcessor
-//    }
-//}
-
 repositories {
     maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     maven { url 'https://maven.aliyun.com/repository/central' }
@@ -22,9 +16,14 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        //移除Jackson
+        exclude group: 'com.fasterxml.jackson.core'
+        exclude group: 'com.fasterxml.jackson.datatype'
+        exclude group: 'com.fasterxml.jackson.module'
+    }
     //Redis session 共享
-    implementation 'org.springframework.session:spring-session-data-redis'
+//    implementation 'org.springframework.session:spring-session-data-redis'
     runtimeOnly 'mysql:mysql-connector-java'
     //lombok 代码简化
     implementation 'org.projectlombok:lombok'
@@ -39,6 +38,4 @@ dependencies {
     implementation 'org.apache.velocity:velocity:1.7'
     //Gson
     implementation 'com.google.code.gson:gson:2.8.5'
-
-
 }
