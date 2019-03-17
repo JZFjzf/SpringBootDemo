@@ -16,6 +16,8 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 
 /**
+ * 修自Gson源码中的CollectionTypeAdapterFactory
+ *
  * @author choimroc
  * @since 2019/3/14
  */
@@ -58,13 +60,18 @@ public class CollectionTypeAdapterFactory implements TypeAdapterFactory {
         public Collection<E> read(JsonReader in) throws IOException {
             if (in.peek() == JsonToken.NULL) {
                 in.nextNull();
-                //这里做了修改，原先是返回null，改为返回空数组
+                //原先是返回null，改为返回空数组
                 return constructor.construct();
             }
 
             Collection<E> collection = constructor.construct();
             in.beginArray();
             while (in.hasNext()) {
+                //如果{}为null,则跳过
+                if (in.peek() == JsonToken.NULL) {
+                    in.skipValue();
+                    continue;
+                }
                 E instance = elementTypeAdapter.read(in);
                 collection.add(instance);
             }
