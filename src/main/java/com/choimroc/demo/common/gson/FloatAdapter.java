@@ -28,6 +28,6 @@ public class FloatAdapter extends TypeAdapter<Float> {
             reader.skipValue();
             return 0F;
         }
-        return Float.parseFloat(String.valueOf(reader.nextDouble()));
+        return (float) reader.nextDouble();
     }
 }
