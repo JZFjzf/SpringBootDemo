@@ -10,4 +10,6 @@ import lombok.Data;
 public class BaseEntity {
 
     private int id;
+    private String createTime;
+    private String updateTime;
 }
