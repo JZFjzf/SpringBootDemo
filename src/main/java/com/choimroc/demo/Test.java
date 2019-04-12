@@ -26,7 +26,7 @@ import java.util.Map;
 public class Test {
     public static void main(String[] args) {
         /*有效： "" {} [] 无效：null */
-        String jsonStr = "{\"code\":200,\"msg\":\"success\",\"data\":[{\"id\":\"\",\"name\":null,\"cities\":null},{\"id\":2,\"name\":\"Guangdong\",\"cities\":[{\"id\":1,\"name\":\"Guangzhou\"}]},{},]}";
+        String jsonStr = "{\"code\":null,\"msg\":\"success\",\"data\":[{\"id\":\"\",\"name\":null,\"cities\":null},{\"id\":2,\"name\":\"Guangdong\",\"cities\":[{\"id\":1,\"name\":\"Guangzhou\"}]},{},]}";
         GsonBuilder gsonBulder = new GsonBuilder()
                 .serializeNulls()
                 .registerTypeAdapterFactory(TypeAdapters.newFactory(int.class, Integer.class, new IntegerAdapter()))
@@ -49,10 +49,20 @@ public class Test {
         }
 
         Gson gson = gsonBulder.create();
+        deserializer(gson, jsonStr);
+
+    }
+
+
+    private static void deserializer(Gson gson, String jsonStr) {
         Result<List<Province>> result = gson.fromJson(jsonStr, new TypeToken<Result<List<Province>>>() {
         }.getType());
 
+        System.out.println(result.getData().get(2).toString());
+    }
 
-        System.out.println(result.getData().get(2));
+    private static void serializer(Gson gson, Result<List<Province>> result) {
+        String data = gson.toJson(result);
+        System.out.println(data);
     }
 }

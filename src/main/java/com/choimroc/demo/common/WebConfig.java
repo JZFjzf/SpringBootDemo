@@ -1,15 +1,7 @@
 package com.choimroc.demo.common;
 
-import com.choimroc.demo.common.gson.CollectionTypeAdapterFactory;
-import com.choimroc.demo.common.gson.DoubleAdapter;
-import com.choimroc.demo.common.gson.FloatAdapter;
-import com.choimroc.demo.common.gson.IntegerAdapter;
-import com.choimroc.demo.common.gson.LongAdapter;
-import com.choimroc.demo.common.gson.StringAdapter;
+import com.choimroc.demo.common.gson.GsonHelper;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.internal.ConstructorConstructor;
-import com.google.gson.internal.bind.TypeAdapters;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +17,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -37,26 +28,10 @@ import java.util.List;
 public class WebConfig implements WebMvcConfigurer {
     @Bean
     public Gson gson() {
-        return new GsonBuilder()
-//                .serializeNulls()
-                .registerTypeAdapterFactory(TypeAdapters.newFactory(int.class, Integer.class, new IntegerAdapter()))
-                .registerTypeAdapterFactory(TypeAdapters.newFactory(float.class, Float.class, new FloatAdapter()))
-                .registerTypeAdapterFactory(TypeAdapters.newFactory(double.class, Double.class, new DoubleAdapter()))
-                .registerTypeAdapterFactory(TypeAdapters.newFactory(long.class, Long.class, new LongAdapter()))
-                .registerTypeAdapterFactory(TypeAdapters.newFactory(String.class, new StringAdapter()))
-                .registerTypeAdapterFactory(new CollectionTypeAdapterFactory(new ConstructorConstructor(new HashMap<>())))
-                .create();
-
-//        try {
-//            Class builder = gsonBulder.getClass();
-//            Field f = builder.getDeclaredField("instanceCreators");
-//            f.setAccessible(true);
-//            Map<Type, InstanceCreator<?>> val = (Map<Type, InstanceCreator<?>>) f.get(gsonBulder);
-//            gsonBulder.registerTypeAdapterFactory(new CollectionTypeAdapterFactory(new ConstructorConstructor(val)));
-//        } catch (NoSuchFieldException | IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
+        return GsonHelper.getInstance().createGson();
     }
+
+
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
