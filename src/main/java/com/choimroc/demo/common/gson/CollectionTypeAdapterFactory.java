@@ -81,7 +81,9 @@ public class CollectionTypeAdapterFactory implements TypeAdapterFactory {
 
         public void write(JsonWriter out, Collection<E> collection) throws IOException {
             if (collection == null) {
-                out.nullValue();
+                //源码中是 out.nullValue()，改为 []
+                out.beginArray();
+                out.endArray();
                 return;
             }
 

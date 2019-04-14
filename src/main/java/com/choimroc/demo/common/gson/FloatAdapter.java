@@ -13,9 +13,9 @@ import java.io.IOException;
  * @author choimroc
  * @since 2018/11/4
  */
-public class FloatAdapter extends TypeAdapter<Float> {
+public class FloatAdapter extends TypeAdapter<Number> {
     @Override
-    public void write(JsonWriter out, Float value) throws IOException {
+    public void write(JsonWriter out, Number value) throws IOException {
         if (value == null) {
             out.value(0F);
             return;
@@ -23,10 +23,17 @@ public class FloatAdapter extends TypeAdapter<Float> {
         out.value(value);
     }
 
-    public Float read(JsonReader reader) throws IOException {
-        if (reader.peek() != JsonToken.NUMBER) {
+    public Number read(JsonReader reader) throws IOException {
+        if (reader.peek() == JsonToken.NULL) {
             reader.skipValue();
             return 0F;
+        } else if (reader.peek() == JsonToken.STRING) {
+            try {
+                return Integer.valueOf(reader.nextString());
+            } catch (NumberFormatException | IOException e) {
+                e.printStackTrace();
+                return 0F;
+            }
         }
         return (float) reader.nextDouble();
     }

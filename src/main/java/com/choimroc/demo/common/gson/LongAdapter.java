@@ -13,10 +13,10 @@ import java.io.IOException;
  * @author choimroc
  * @since 2018/11/4
  */
-public class LongAdapter extends TypeAdapter<Long> {
+public class LongAdapter extends TypeAdapter<Number> {
 
     @Override
-    public void write(JsonWriter out, Long value) throws IOException {
+    public void write(JsonWriter out, Number value) throws IOException {
         if (value == null) {
             out.value(0L);
             return;
@@ -24,10 +24,17 @@ public class LongAdapter extends TypeAdapter<Long> {
         out.value(value);
     }
 
-    public Long read(JsonReader reader) throws IOException {
-        if (reader.peek() != JsonToken.NUMBER) {
+    public Number read(JsonReader reader) throws IOException {
+        if (reader.peek() == JsonToken.NULL) {
             reader.skipValue();
             return 0L;
+        } else if (reader.peek() == JsonToken.STRING) {
+            try {
+                return Integer.valueOf(reader.nextString());
+            } catch (NumberFormatException | IOException e) {
+                e.printStackTrace();
+                return 0L;
+            }
         }
         return reader.nextLong();
     }
