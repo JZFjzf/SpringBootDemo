@@ -31,8 +31,6 @@ public class WebConfig implements WebMvcConfigurer {
         return GsonHelper.getInstance().createGson();
     }
 
-
-
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
