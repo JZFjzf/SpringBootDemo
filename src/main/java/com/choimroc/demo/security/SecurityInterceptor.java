@@ -1,4 +1,4 @@
-package com.choimroc.demo.common;
+package com.choimroc.demo.security;
 
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

@@ -1,4 +1,4 @@
-package com.choimroc.demo.tools.generator;
+package com.choimroc.demo.tool.generator;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;

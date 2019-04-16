@@ -1,4 +1,4 @@
-package com.choimroc.demo.common;
+package com.choimroc.demo.security;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

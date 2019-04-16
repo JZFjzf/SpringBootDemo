@@ -1,6 +1,7 @@
 package com.choimroc.demo.common;
 
 import com.choimroc.demo.common.gson.GsonHelper;
+import com.choimroc.demo.security.SecurityInterceptor;
 import com.google.gson.Gson;
 
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.choimroc.demo.tools;
+package com.choimroc.demo.tool;
 
 /**
  * @author choimroc

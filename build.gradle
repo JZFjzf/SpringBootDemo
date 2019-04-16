@@ -24,6 +24,7 @@ dependencies {
     }
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     //spring boot官方推荐redis操作库jedis
     implementation 'redis.clients:jedis:3.0.1'
     runtimeOnly 'mysql:mysql-connector-java'
