@@ -16,7 +16,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 
 /**
- * 修自Gson源码中的CollectionTypeAdapterFactory
+ * 修改自Gson源码中的CollectionTypeAdapterFactory
  *
  * @author choimroc
  * @since 2019/3/14

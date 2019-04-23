@@ -12,6 +12,8 @@ import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
 /**
+ * 复制自源码中的TypeAdapterRuntimeTypeWrapper
+ *
  * @author choimroc
  * @since 2019/3/14
  */

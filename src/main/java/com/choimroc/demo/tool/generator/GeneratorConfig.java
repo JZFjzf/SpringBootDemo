@@ -13,17 +13,17 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import java.util.Scanner;
 
 /**
- * 代码生成器
- *
  * @author choimroc
- * @since 2019/4/8
+ * @since 2019/4/24
  */
-public class CodeGenerator {
+public class GeneratorConfig {
+
+    public static final String parentPackage = "com.choimroc.demo";
 
     /**
      * 读取控制台内容
      */
-    private static String scanner(String tip) {
+    public static String scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("请输入" + tip + "：");
         if (scanner.hasNext()) {
@@ -35,7 +35,7 @@ public class CodeGenerator {
         throw new MybatisPlusException("请输入正确的" + tip + "！");
     }
 
-    public static void main(String[] args) {
+    public static void generator(StrategyConfig strategy) {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -72,7 +72,6 @@ public class CodeGenerator {
         mpg.setTemplate(templateConfig);
 
         // 策略配置
-        StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setSuperEntityClass(parentPackage + ".base.BaseEntity");
