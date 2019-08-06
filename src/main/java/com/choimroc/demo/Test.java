@@ -7,7 +7,4 @@ import com.choimroc.demo.tool.EncodeUtils;
  * @since 2019/4/17
  */
 public class Test {
-    public static void main(String[] args) {
-        System.out.println(EncodeUtils.createToken(1));
-    }
 }

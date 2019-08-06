@@ -6,13 +6,13 @@ package com.choimroc.demo.tool;
  */
 public class StringUtils {
 
-    private static boolean isBlank(String str) {
+    private static boolean isEmpty(String str) {
         return str == null || str.isEmpty() || str.replaceAll(" ", "").isEmpty() || "null".equals(str);
     }
 
-    public static boolean isBlank(String... strings) {
+    public static boolean isEmpty(String... strings) {
         for (String str : strings) {
-            if (isBlank(str)) {
+            if (isEmpty(str)) {
                 return true;
             }
         }

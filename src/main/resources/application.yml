@@ -1,7 +1,7 @@
 spring:
   profiles:
     active: dev
-#      active: pro
+  #      active: pro
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #    type: com.zaxxer.hikari.HikariDataSource
@@ -12,7 +12,5 @@ spring:
 #      pool-name: DatebookHikariCP
 #      max-lifetime: 1800000
 #      connection-timeout: 30000
-  gson:
-    date-format: yyyy-MM-dd HH:mm:ss
 
 
