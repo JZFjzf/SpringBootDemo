@@ -66,7 +66,7 @@ public class WebConfig implements WebMvcConfigurer {
         // 配置拦截的路径
         interceptor.addPathPatterns("/**");
         // 配置不拦截的路径
-        interceptor.excludePathPatterns("**/swagger-ui.html");
+        interceptor.excludePathPatterns("**/test.html");
     }
 
     @Override

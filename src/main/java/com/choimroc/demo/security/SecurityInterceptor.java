@@ -2,6 +2,7 @@ package com.choimroc.demo.security;
 
 
 import com.choimroc.demo.annotation.IgnoreSecurity;
+import com.choimroc.demo.annotation.Permission;
 import com.choimroc.demo.common.exception.CustomException;
 import com.choimroc.demo.tool.EncodeUtils;
 import com.choimroc.demo.tool.RedisUtils;
@@ -52,50 +53,33 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 //        log.debug("requestIp: " + getIpAddress(request));
         log.debug("Method: " + method.getName() + ", IgnoreSecurity: " + method.isAnnotationPresent(IgnoreSecurity.class));
         log.debug("requestPath: " + requestPath);
-        /* 判断接口是否需要认证*/
+        //判断接口是否需要认证
         IgnoreSecurity ignoreSecurity = method.getAnnotation(IgnoreSecurity.class);
 
         //不要验证
-        if (ignoreSecurity != null && !ignoreSecurity.onlyTeamId()) {
+        if (ignoreSecurity != null) {
             return true;
         }
 
-        int userId = 0;
-        int teamId = 0;
-        //是否通过验证
-        boolean pass = true;
-        //如果没有注解则检查token和teamId
-        if (ignoreSecurity == null) {
-            userId = parseToken(request);
-            teamId = parseTeamId(request);
-
-            if (userId == 0 || teamId == 0) {
-                pass = false;
-            }
-
-        } else if (ignoreSecurity.onlyTeamId()) {
-            //如果有注解但是onlyTeamId为true, 则忽略TeamId的检查,只检查token
-            userId = parseToken(request);
-            if (userId == 0) {
-                pass = false;
-            }
-        }
-
-        if (pass) {
-            //如果false一般就是key已经失效
-            if (!redisUtils.refreshToken(userId)) {
-                throw new CustomException(401, "身份认证失败,请重新登录");
-            }
-
-            //放入UserInfo
-            UserInfo userInfo = new UserInfo();
-            userInfo.setUserId(userId);
-            userInfo.setTeamId(teamId);
-
-            request.setAttribute("CurrentUser", userInfo);
-        } else {
+        int userId = parseToken(request);
+        //如果refresh false一般就是key已经失效
+        if (userId == 0 || !redisUtils.refreshToken(userId)) {
             throw new CustomException(401, "身份认证失败,请重新登录");
         }
+
+        //判断接口是否需要验证权限
+        Permission permission = method.getAnnotation(Permission.class);
+        //需要验证权限
+        if (permission != null) {
+            //TODO 查找用户信息进行比较
+        }
+
+        //验证通过，返回用户信息
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserId(userId);
+
+        request.setAttribute("CurrentUser", userInfo);
+
 
         return true;
     }
@@ -119,7 +103,6 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
                     //比较
                     if (!token.equals(tokenCache)) {
                         userId = 0;
-//                        throw new RuntimeException("tokenCache is " + tokenCache);
                     }
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
@@ -129,17 +112,4 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         return userId;
     }
 
-    private int parseTeamId(HttpServletRequest request) {
-        String strTeamId = request.getHeader("teamId");
-        log.debug("teamId: " + strTeamId);
-        int teamId = 0;
-        if (!StringUtils.isEmpty(strTeamId)) {
-            try {
-                teamId = Integer.parseInt(strTeamId);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
-        return teamId;
-    }
 }

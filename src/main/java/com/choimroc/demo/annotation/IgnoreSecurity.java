@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 是否忽略认证,默认检查token和teamId
+ * 是否忽略用户认证
  *
  * @author choimroc
  * @since 2019/3/10
@@ -14,6 +14,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IgnoreSecurity {
-    //是否只忽略teamId
-    boolean onlyTeamId() default false;
+
 }

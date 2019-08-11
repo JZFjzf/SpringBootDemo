@@ -11,5 +11,4 @@ import lombok.Setter;
 @Getter
 public class UserInfo {
     private int userId;
-    private int teamId;
 }
