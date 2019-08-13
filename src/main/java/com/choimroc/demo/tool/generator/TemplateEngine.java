@@ -38,7 +38,7 @@ public class TemplateEngine extends AbstractTemplateEngine {
             p.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, StringPool.EMPTY);
             p.setProperty(Velocity.ENCODING_DEFAULT, ConstVal.UTF8);
             p.setProperty(Velocity.INPUT_ENCODING, ConstVal.UTF8);
-            p.setProperty("file.resource.loader.unicode", StringPool.TRUE);
+            p.setProperty("resource.loader.file.unicode", StringPool.TRUE);
             velocityEngine = new VelocityEngine(p);
         }
         return this;

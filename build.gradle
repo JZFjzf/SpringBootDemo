@@ -38,7 +38,7 @@ dependencies {
     //代码生成器
     implementation 'com.baomidou:mybatis-plus-generator:3.1.2'
     //模板引擎
-    implementation 'org.apache.velocity:velocity:1.7'
+    implementation 'org.apache.velocity:velocity-engine-core:2.1'
     //Gson
     implementation 'com.google.code.gson:gson:2.8.5'
 }
