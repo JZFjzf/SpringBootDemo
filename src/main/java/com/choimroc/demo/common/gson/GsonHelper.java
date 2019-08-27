@@ -63,6 +63,7 @@ public class GsonHelper {
                 Class builder = gsonBuilder.getClass();
                 Field f = builder.getDeclaredField("instanceCreators");
                 f.setAccessible(true);
+                @SuppressWarnings("unchecked")
                 Map<Type, InstanceCreator<?>> val = (Map<Type, InstanceCreator<?>>) f.get(gsonBuilder);
                 return new CollectionTypeAdapterFactory(new ConstructorConstructor(val));
             } catch (NoSuchFieldException | IllegalAccessException e) {
