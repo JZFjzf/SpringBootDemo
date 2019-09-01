@@ -15,6 +15,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.http.converter.xml.SourceHttpMessageConverter;
+import org.springframework.web.filter.FormContentFilter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -39,6 +40,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     public WebConfig(SecurityInterceptor securityInterceptor) {
         this.securityInterceptor = securityInterceptor;
+    }
+
+    @Bean
+    public FormContentFilter formContentFilter() {
+        return new FormContentFilter();
     }
 
     @Bean

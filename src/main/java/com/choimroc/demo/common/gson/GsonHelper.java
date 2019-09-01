@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,7 @@ public class GsonHelper {
 //                .registerTypeAdapterFactory(TypeAdapters.newFactory(double.class, Double.class, new DoubleAdapter()))
 //                .registerTypeAdapterFactory(TypeAdapters.newFactory(long.class, Long.class, new LongAdapter()))
                 .registerTypeAdapterFactory(TypeAdapters.newFactory(String.class, new StringAdapter()))
+                .registerTypeAdapterFactory(TypeAdapters.newFactory(LocalDateTime.class, new DateAdapter()))
                 .registerTypeAdapterFactory(createCollectionTypeAdapterFactory(gsonBuilder, false));
 
         return gsonBuilder.create();
