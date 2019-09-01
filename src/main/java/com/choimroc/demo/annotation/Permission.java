@@ -23,9 +23,4 @@ public @interface Permission {
      * 接口所属操作项id(按钮级)
      */
     int operation() default 0;
-
-    /**
-     * 接口所属的权限id(对象级)
-     */
-    int permission() default 0;
 }

@@ -222,7 +222,6 @@
 
     <!--开发环境-->
     <springProfile name="dev">
-        <!--logger 只记录指定包的日志-->
         <root level="INFO">
             <appender-ref ref="CONSOLE" />
             <appender-ref ref="DEBUG_FILE" />

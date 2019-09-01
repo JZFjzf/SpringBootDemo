@@ -31,7 +31,10 @@ public class RedisUtils {
      * @param token  the token
      * @return the token
      */
-    public boolean setToken(int userId, String token) {
+    public boolean setToken(Integer userId, String token) {
+        if (userId == null || token == null) {
+            return false;
+        }
         String key = String.valueOf(userId);
         return set(key, token, 7, TimeUnit.DAYS);
     }
@@ -51,7 +54,7 @@ public class RedisUtils {
     }
 
 
-    public boolean setCode(String key,String code) {
+    public boolean setCode(String key, String code) {
         return set(key, code, 10, TimeUnit.MINUTES);
     }
 
