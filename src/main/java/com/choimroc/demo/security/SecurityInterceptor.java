@@ -64,7 +64,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         int userId = parseToken(request);
         //如果refresh false一般就是key已经失效
         if (userId == 0 || !redisUtils.refreshToken(userId)) {
-            throw new CustomException(401, "身份认证失败,请重新登录");
+            throw new CustomException(401, "身份认证失败,请重新登录", "token已失效");
         }
 
         //判断接口是否需要验证权限
@@ -108,6 +108,8 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
                     e.printStackTrace();
                 }
             }
+        } else {
+            throw new CustomException(401, "请先登录", "token为空");
         }
         return userId;
     }

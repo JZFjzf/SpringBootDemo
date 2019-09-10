@@ -7,14 +7,16 @@ package com.choimroc.demo.common.exception;
 public class CustomException extends RuntimeException {
 
     private int code = 500;
+    private String error = "自定义异常";
 
     public CustomException() {
         super();
     }
 
-    public CustomException(int code, String message) {
+    public CustomException(int code, String message,String error) {
         super(message);
         this.setCode(code);
+        this.error = error;
     }
 
     public int getCode() {
@@ -23,5 +25,13 @@ public class CustomException extends RuntimeException {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

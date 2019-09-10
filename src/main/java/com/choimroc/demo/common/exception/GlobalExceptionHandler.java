@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -65,7 +67,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CustomException.class)
     public Result customExceptionHandler(final CustomException exception, HttpServletResponse response) {
         response.setStatus(HttpStatus.OK.value());
-        return new Result(exception.getCode(), exception.getMessage());
+        return new Result(exception.getCode(), exception.getMessage(), exception.getError());
+    }
+
+    @ExceptionHandler(SQLException.class)
+    public Result sqlException(final SQLException exception, HttpServletResponse response) {
+        response.setStatus(HttpStatus.OK.value());
+        return ResultHelper.badRequest(exception.getMessage(), "数据库操作失败");
     }
 
 }

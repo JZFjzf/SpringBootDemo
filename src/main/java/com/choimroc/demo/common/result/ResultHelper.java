@@ -48,11 +48,16 @@ public class ResultHelper {
     /**
      * 当前请求无法被服务器理解 或 请求参数有误
      */
-    public static Result badRequest(String msg) {
+    public static Result badRequest(String msg, String error) {
         Result result = new Result();
         result.setCode(400);
         result.setMsg(msg);
+        result.setError(error);
         return result;
+    }
+
+    public static Result badRequest(String msg) {
+        return badRequest(msg, null);
     }
 
     public static Result badRequest() {

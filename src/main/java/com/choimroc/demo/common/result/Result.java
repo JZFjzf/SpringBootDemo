@@ -14,12 +14,15 @@ import lombok.Setter;
 public class Result {
     private int code;
     private String msg;
+    private String error;
 
     public Result() {
     }
 
-    public Result(int code, String msg) {
+    public Result(int code, String msg,String error) {
         this.code = code;
         this.msg = msg;
+        this.error = error;
     }
 }
+
