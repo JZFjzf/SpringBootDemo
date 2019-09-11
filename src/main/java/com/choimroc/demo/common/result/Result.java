@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * restful统一返回
+ * 统一返回结果
  *
  * @author choimroc
  * @since 2019/3/8
@@ -14,15 +14,10 @@ import lombok.Setter;
 public class Result {
     private int code;
     private String msg;
-    private String error;
 
-    public Result() {
-    }
-
-    public Result(int code, String msg,String error) {
+    public Result(int code, String msg) {
         this.code = code;
         this.msg = msg;
-        this.error = error;
     }
 }
 
