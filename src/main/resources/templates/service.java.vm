@@ -9,7 +9,6 @@ import ${superServiceClassPackage};
  * @author ${author}
  * @since ${date}
  */
-@Service
 #if(${kotlin})
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 #else
