@@ -5,7 +5,7 @@ import ${superMapperClassPackage};
 
 import org.springframework.stereotype.Repository;
 /**
- * $!{table.comment} Mapper 接口
+ * $!{table.comment}
  *
  * @author ${author}
  * @since ${date}

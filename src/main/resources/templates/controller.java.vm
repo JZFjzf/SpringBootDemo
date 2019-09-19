@@ -13,7 +13,7 @@ import ${superControllerClassPackage};
 #end
 
 /**
- * $!{table.comment} 控制器
+ * $!{table.comment}
  *
  * @author ${author}
  * @since ${date}
