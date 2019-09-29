@@ -73,7 +73,7 @@ public class WebConfig implements WebMvcConfigurer {
         return localValidatorFactoryBean;
     }
 
-    @Bean
+    @Bean(name = "messageSource")
     public ResourceBundleMessageSource resourceBundleMessageSource() {
         ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
         resourceBundleMessageSource.setBasename("i18n/messages");

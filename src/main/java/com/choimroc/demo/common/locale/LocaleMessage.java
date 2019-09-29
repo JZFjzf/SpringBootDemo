@@ -1,8 +1,8 @@
 package com.choimroc.demo.common.locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
@@ -15,10 +15,10 @@ import java.util.Locale;
  */
 @Component
 public class LocaleMessage {
-    private final ResourceBundleMessageSource messageSource;
+    private final MessageSource messageSource;
 
     @Autowired
-    public LocaleMessage(ResourceBundleMessageSource messageSource) {
+    public LocaleMessage(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
