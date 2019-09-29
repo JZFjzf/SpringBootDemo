@@ -69,12 +69,12 @@ public class WebConfig implements WebMvcConfigurer {
     public LocalValidatorFactoryBean mvcValidator() {
         LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
         localValidatorFactoryBean.getValidationPropertyMap().put("hibernate.validator.fail_fast", "true");
-        localValidatorFactoryBean.setValidationMessageSource(ResourceBundleMessageSource());
+        localValidatorFactoryBean.setValidationMessageSource(resourceBundleMessageSource());
         return localValidatorFactoryBean;
     }
 
     @Bean
-    public ResourceBundleMessageSource ResourceBundleMessageSource() {
+    public ResourceBundleMessageSource resourceBundleMessageSource() {
         ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
         resourceBundleMessageSource.setBasename("i18n/messages");
         resourceBundleMessageSource.setDefaultEncoding("UTF-8");
