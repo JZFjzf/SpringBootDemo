@@ -1,9 +1,11 @@
 package com.choimroc.demo.common.exception;
 
 
+import com.choimroc.demo.common.locale.LocaleMessage;
 import com.choimroc.demo.common.result.ErrorResult;
 import com.choimroc.demo.common.result.Result;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -26,6 +28,12 @@ import javax.validation.ConstraintViolationException;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+    private final LocaleMessage localeMessage;
+
+    @Autowired
+    public GlobalExceptionHandler(LocaleMessage localeMessage) {
+        this.localeMessage = localeMessage;
+    }
 
     @ExceptionHandler(BindException.class)
     public Result bindExceptionHandler(final BindException e, HttpServletResponse response) {
@@ -74,6 +82,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public Result sqlException(final SQLException exception, HttpServletResponse response) {
         response.setStatus(HttpStatus.OK.value());
         return handleErrorResult(exception.getMessage(), "数据库操作失败");
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public Result nullPointerException(final NullPointerException exception, HttpServletResponse response) {
+        exception.printStackTrace();
+        response.setStatus(HttpStatus.OK.value());
+        return handleErrorResult(localeMessage.getMessage("common.error.server"), "NullPointerException");
     }
 
     private Result handleErrorResult(int code, String msg, String error) {

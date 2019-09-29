@@ -2,9 +2,11 @@ spring:
   profiles:
     active: dev
   #      active: pro
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #    type: com.zaxxer.hikari.HikariDataSource
+#    type: com.zaxxer.hikari.HikariDataSource
 #    hikari:
 #      minimum-idle: 3
 #      auto-commit: true
