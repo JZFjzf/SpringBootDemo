@@ -13,7 +13,16 @@ public class CustomException extends RuntimeException {
         super();
     }
 
-    public CustomException(int code, String message,String error) {
+    public CustomException(String message) {
+        super(message);
+    }
+
+    public CustomException(String message, String error) {
+        super(message);
+        this.error = error;
+    }
+
+    public CustomException(int code, String message, String error) {
         super(message);
         this.setCode(code);
         this.error = error;

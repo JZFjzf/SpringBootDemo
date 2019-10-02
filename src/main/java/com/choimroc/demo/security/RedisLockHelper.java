@@ -10,9 +10,11 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.util.StringUtils;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
 /**
@@ -24,16 +26,37 @@ import java.util.regex.Pattern;
 public class RedisLockHelper {
     private static final String DELIMITER = "|";
 
-    /**
-     * 如果要求比较高可以通过注入的方式分配
-     */
-    private static final ScheduledExecutorService EXECUTOR_SERVICE = Executors.newScheduledThreadPool(10);
+    private static final ScheduledExecutorService EXECUTOR_SERVICE = new ScheduledThreadPoolExecutor(10, new UnlockThreadFactory());
 
     private final StringRedisTemplate stringRedisTemplate;
 
     @Autowired
     public RedisLockHelper(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
+    }
+
+    public static class UnlockThreadFactory implements ThreadFactory {
+        private final ThreadGroup group;
+        private final AtomicInteger threadNumber = new AtomicInteger(1);
+        private final String namePrefix;
+
+        UnlockThreadFactory() {
+            String groupName = " RedisUnlock";
+            group = new ThreadGroup(groupName);
+            namePrefix = "pool-" + groupName + "-thread-";
+        }
+
+        @Override
+        public Thread newThread(Runnable r) {
+            Thread t = new Thread(group, r, namePrefix + threadNumber.getAndIncrement(), 0);
+            if (t.isDaemon()) {
+                t.setDaemon(false);
+            }
+            if (t.getPriority() != Thread.NORM_PRIORITY) {
+                t.setPriority(Thread.NORM_PRIORITY);
+            }
+            return t;
+        }
     }
 
     /**
@@ -46,7 +69,12 @@ public class RedisLockHelper {
      * @return true or false
      */
     public boolean tryLock(final String lockKey, final String value, final long time, final TimeUnit unit) {
-        return stringRedisTemplate.execute((RedisCallback<Boolean>) connection -> connection.set(lockKey.getBytes(), value.getBytes(), Expiration.from(time, unit), RedisStringCommands.SetOption.SET_IF_ABSENT));
+        Boolean result = stringRedisTemplate.execute((RedisCallback<Boolean>) connection ->
+                connection.set(lockKey.getBytes(), value.getBytes(), Expiration.from(time, unit), RedisStringCommands.SetOption.SET_IF_ABSENT));
+        if (result == null) {
+            return false;
+        }
+        return result;
     }
 
     /**
@@ -60,11 +88,18 @@ public class RedisLockHelper {
      */
     public boolean lock(String lockKey, final String uuid, long timeout, final TimeUnit unit) {
         final long milliseconds = Expiration.from(timeout, unit).getExpirationTimeInMilliseconds();
-        boolean success = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, (System.currentTimeMillis() + milliseconds) + DELIMITER + uuid);
+        Boolean success = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, (System.currentTimeMillis() + milliseconds) + DELIMITER + uuid);
+        if (success == null) {
+            return false;
+        }
+
         if (success) {
             stringRedisTemplate.expire(lockKey, timeout, TimeUnit.SECONDS);
         } else {
             String oldVal = stringRedisTemplate.opsForValue().getAndSet(lockKey, (System.currentTimeMillis() + milliseconds) + DELIMITER + uuid);
+            if (oldVal == null) {
+                return false;
+            }
             final String[] oldValues = oldVal.split(Pattern.quote(DELIMITER));
             if (Long.parseLong(oldValues[0]) + 1 <= System.currentTimeMillis()) {
                 return true;
@@ -73,10 +108,6 @@ public class RedisLockHelper {
         return success;
     }
 
-
-    /**
-     * @see <a href="http://redis.io/commands/set">Redis Documentation: SET</a>
-     */
     public void unlock(String lockKey, String value) {
         unlock(lockKey, value, 0, TimeUnit.MILLISECONDS);
     }
@@ -96,7 +127,13 @@ public class RedisLockHelper {
         if (delayTime <= 0) {
             doUnlock(lockKey, uuid);
         } else {
-            EXECUTOR_SERVICE.schedule(() -> doUnlock(lockKey, uuid), delayTime, unit);
+            EXECUTOR_SERVICE.schedule(() -> {
+                try {
+                    doUnlock(lockKey, uuid);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }, delayTime, unit);
         }
     }
 
@@ -106,6 +143,9 @@ public class RedisLockHelper {
      */
     private void doUnlock(final String lockKey, final String uuid) {
         String val = stringRedisTemplate.opsForValue().get(lockKey);
+        if (val == null) {
+            return;
+        }
         final String[] values = val.split(Pattern.quote(DELIMITER));
         if (values.length <= 0) {
             return;

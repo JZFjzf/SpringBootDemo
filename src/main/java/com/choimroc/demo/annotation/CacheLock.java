@@ -45,4 +45,10 @@ public @interface CacheLock {
      * @return String
      */
     String delimiter() default ":";
+
+
+    /**
+     * 返回的提示语
+     */
+    String hint() default "请勿重复提交";
 }
