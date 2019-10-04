@@ -33,7 +33,7 @@ public class LockMethodInterceptor {
     private final CacheKeyGenerator cacheKeyGenerator;
 
 
-    @Around("execution(public * *(..)) && @annotation(com.choimroc.vm.annotation.CacheLock)")
+    @Around("execution(public * *(..)) && @annotation(com.choimroc.demo.annotation.CacheLock)")
     public Object interceptor(ProceedingJoinPoint pjp) {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();

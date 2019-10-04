@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -39,12 +40,10 @@ public class GsonHelper {
     public Gson createGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls()
-//                .registerTypeAdapterFactory(TypeAdapters.newFactory(int.class, Integer.class, new IntegerAdapter()))
-//                .registerTypeAdapterFactory(TypeAdapters.newFactory(float.class, Float.class, new FloatAdapter()))
-//                .registerTypeAdapterFactory(TypeAdapters.newFactory(double.class, Double.class, new DoubleAdapter()))
-//                .registerTypeAdapterFactory(TypeAdapters.newFactory(long.class, Long.class, new LongAdapter()))
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .registerTypeAdapterFactory(TypeAdapters.newFactory(String.class, new StringAdapter()))
-                .registerTypeAdapterFactory(TypeAdapters.newFactory(LocalDateTime.class, new DateAdapter()))
+                .registerTypeAdapterFactory(TypeAdapters.newFactory(LocalDate.class, new LocalDateAdapter()))
+                .registerTypeAdapterFactory(TypeAdapters.newFactory(LocalDateTime.class, new LocalDateTimeAdapter()))
                 .registerTypeAdapterFactory(createCollectionTypeAdapterFactory(gsonBuilder, false));
 
         return gsonBuilder.create();

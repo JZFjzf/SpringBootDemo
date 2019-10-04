@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
  * @author choimroc
  * @since 2019/9/1
  */
-public class DateAdapter extends TypeAdapter<LocalDateTime> {
+public class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
     @Override
     public void write(JsonWriter out, LocalDateTime value) throws IOException {
         if (value == null) {

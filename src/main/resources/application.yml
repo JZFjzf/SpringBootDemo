@@ -1,9 +1,11 @@
+
 spring:
   profiles:
     active: dev
   #      active: pro
   main:
     allow-bean-definition-overriding: true
+    banner-mode: "off"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    type: com.zaxxer.hikari.HikariDataSource
@@ -15,4 +17,6 @@ spring:
 #      max-lifetime: 1800000
 #      connection-timeout: 30000
 
-
+mybatis-plus:
+  global-config:
+    banner: false
