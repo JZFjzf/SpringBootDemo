@@ -1,7 +1,7 @@
 package com.choimroc.demo;
 
-import com.choimroc.demo.security.CacheKeyGenerator;
-import com.choimroc.demo.security.LockKeyGenerator;
+import com.choimroc.demo.security.lock.CacheKeyGenerator;
+import com.choimroc.demo.security.lock.LockKeyGenerator;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

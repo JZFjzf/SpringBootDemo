@@ -1,4 +1,4 @@
-package com.choimroc.demo.security;
+package com.choimroc.demo.security.lock;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.stereotype.Component;

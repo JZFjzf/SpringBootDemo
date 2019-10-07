@@ -1,4 +1,4 @@
-package com.choimroc.demo.security;
+package com.choimroc.demo.security.lock;
 
 
 import com.choimroc.demo.annotation.CacheLock;

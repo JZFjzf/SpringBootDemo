@@ -1,4 +1,4 @@
-package com.choimroc.demo.security;
+package com.choimroc.demo.security.lock;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

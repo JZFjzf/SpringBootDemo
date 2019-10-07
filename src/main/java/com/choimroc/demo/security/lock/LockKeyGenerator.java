@@ -1,8 +1,9 @@
-package com.choimroc.demo.security;
+package com.choimroc.demo.security.lock;
 
 
 import com.choimroc.demo.annotation.CacheLock;
 import com.choimroc.demo.annotation.CacheParam;
+import com.choimroc.demo.security.lock.CacheKeyGenerator;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;

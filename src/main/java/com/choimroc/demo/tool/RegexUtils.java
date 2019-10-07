@@ -11,7 +11,7 @@ public final class RegexUtils {
      * 是否含有特殊字符
      */
     public static boolean isHasSpecial(String s) {
-        String regex = "[`~!@#$%^&*()+=|{}':;,\\[\\]. <>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        String regex = "[`~!@#$%^&*()+=|{}':;,\\[\\]. <>/?！￥…（）—【】‘；：”“’。，、？]";
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(s).find();
     }

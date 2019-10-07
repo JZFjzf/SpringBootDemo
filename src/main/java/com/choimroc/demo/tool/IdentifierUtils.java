@@ -1,5 +1,7 @@
 package com.choimroc.demo.tool;
 
+import java.time.Clock;
+
 /**
  * 编号生成工具
  *
@@ -19,7 +21,7 @@ public class IdentifierUtils {
     }
 
     private long timeGen() {
-        return System.currentTimeMillis();
+        return Clock.systemDefaultZone().millis();
     }
 
     /**
