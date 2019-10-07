@@ -46,7 +46,7 @@ public class CodeGenerator {
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setServiceName("%sService");
         gc.setAuthor("choimroc");
-        gc.setOpen(true);
+        gc.setOpen(false);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
