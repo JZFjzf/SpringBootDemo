@@ -12,10 +12,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+/**
+ * @author choimroc
+ * @since 2019/10/21
+ */
 @SpringBootApplication
-//允许缓存
 @EnableCaching
-//mapper映射文件路径
 @MapperScan("com.choimroc.demo.*.mapper")
 public class Application {
 
@@ -35,7 +37,6 @@ public class Application {
         corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
-//        corsConfiguration.addExposedHeader();
         return corsConfiguration;
     }
 

@@ -6,6 +6,8 @@ import com.choimroc.demo.common.result.ErrorResult;
 import com.choimroc.demo.common.result.PageResult;
 import com.choimroc.demo.common.result.Result;
 
+import java.util.List;
+
 /**
  * @author choimroc
  * @since 2019/3/8
@@ -32,17 +34,28 @@ public class BaseController {
     }
 
     public <T> DataResult<T> data(T data) {
-        return data("", data);
+        return data("成功", data);
     }
 
-    public <T> PageResult<T> page(IPage<T> page) {
-        PageResult<T> result = new PageResult<>();
+    public <T> PageResult<List<T>> page(IPage<T> page) {
+        PageResult<List<T>> result = new PageResult<>();
         result.setCode(200);
         result.setMsg("成功");
         result.setPageNumber(page.getCurrent());
         result.setPages(page.getPages());
         result.setTotal(page.getTotal());
         result.setData(page.getRecords());
+        return result;
+    }
+
+    public <T> PageResult<T> page(IPage page, T data) {
+        PageResult<T> result = new PageResult<>();
+        result.setCode(200);
+        result.setMsg("成功");
+        result.setPageNumber(page.getCurrent());
+        result.setPages(page.getPages());
+        result.setTotal(page.getTotal());
+        result.setData(data);
         return result;
     }
 

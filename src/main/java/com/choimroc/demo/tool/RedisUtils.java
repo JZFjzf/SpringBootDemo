@@ -23,22 +23,6 @@ public class RedisUtils {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
-
-    /**
-     * 放入token,有效期为7天
-     *
-     * @param userId the user id
-     * @param token  the token
-     * @return the token
-     */
-    public boolean setToken(Integer userId, String token) {
-        if (userId == null || token == null) {
-            return false;
-        }
-        String key = String.valueOf(userId);
-        return set(key, token, 7, TimeUnit.DAYS);
-    }
-
     public String getToken(int userId) {
         return get(String.valueOf(userId));
     }

@@ -1,7 +1,5 @@
 package com.choimroc.demo.common.result;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,5 +27,5 @@ public class PageResult<T> extends Result {
     /**
      * 数据
      */
-    private List<T> data;
+    private T data;
 }

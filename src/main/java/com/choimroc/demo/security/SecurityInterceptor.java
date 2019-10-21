@@ -4,8 +4,8 @@ package com.choimroc.demo.security;
 import com.choimroc.demo.annotation.IgnoreSecurity;
 import com.choimroc.demo.annotation.Permission;
 import com.choimroc.demo.common.exception.CustomException;
+import com.choimroc.demo.tool.CacheUtils;
 import com.choimroc.demo.tool.EncodeUtils;
-import com.choimroc.demo.tool.RedisUtils;
 import com.choimroc.demo.tool.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +29,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class SecurityInterceptor extends HandlerInterceptorAdapter {
-    private final RedisUtils redisUtils;
+    private final CacheUtils cacheUtils;
 
     @Autowired
-    public SecurityInterceptor(RedisUtils redisUtils) {
-        this.redisUtils = redisUtils;
+    public SecurityInterceptor(CacheUtils cacheUtils) {
+        this.cacheUtils = cacheUtils;
     }
 
     @Override
@@ -50,9 +50,6 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-//        log.debug("requestIp: " + getIpAddress(request));
-        log.debug("Method: " + method.getName() + ", IgnoreSecurity: " + method.isAnnotationPresent(IgnoreSecurity.class));
-        log.debug("requestPath: " + requestPath);
         //判断接口是否需要认证
         IgnoreSecurity ignoreSecurity = method.getAnnotation(IgnoreSecurity.class);
 
@@ -63,7 +60,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
         int userId = parseToken(request);
         //如果refresh false一般就是key已经失效
-        if (userId == 0 || !redisUtils.refreshToken(userId)) {
+        if (userId == 0 || !cacheUtils.refreshToken(userId)) {
             throw new CustomException(401, "身份认证失败,请重新登录", "token已失效");
         }
 
@@ -99,7 +96,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
                     //获取token中的userId
                     userId = Integer.parseInt(EncodeUtils.base64Encode(s[0]));
                     //取出redis中的token
-                    String tokenCache = redisUtils.getToken(userId);
+                    String tokenCache = cacheUtils.getToken(userId);
                     //比较
                     if (!token.equals(tokenCache)) {
                         userId = 0;

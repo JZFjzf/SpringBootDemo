@@ -20,12 +20,15 @@ import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 全局异常处理
  *
  * @author choimroc
  * @since 2019/5/4
  */
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     private final LocaleMessage localeMessage;
@@ -38,6 +41,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(BindException.class)
     public Result bindExceptionHandler(final BindException e) {
+        logStackMsg(e);
         String message = e.getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining());
         return handleErrorResult(message);
     }
@@ -45,6 +49,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(ConstraintViolationException.class)
     public Result violationExceptionHandler(final ConstraintViolationException e) {
+        logStackMsg(e);
         String message = e.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining());
         return handleErrorResult(message);
     }
@@ -52,6 +57,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Result methodArgumentNotValidException(final MethodArgumentNotValidException e) {
+        logStackMsg(e);
         String message = e.getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining());
         return handleErrorResult(message);
     }
@@ -59,20 +65,21 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(CustomException.class)
     public Result customExceptionHandler(final CustomException e) {
+        logStackMsg(e);
         return handleErrorResult(e.getCode(), e.getMessage(), e.getError());
     }
 
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(SQLException.class)
     public Result sqlException(final SQLException e) {
-        e.printStackTrace();
+        logStackMsg(e);
         return handleErrorResult(e.getMessage(), "数据库操作失败");
     }
 
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(NullPointerException.class)
     public Result nullPointerException(final NullPointerException e) {
-        e.printStackTrace();
+        logStackMsg(e);
         return handleErrorResult(localeMessage.getMessage("common.error.server"), "NullPointerException");
     }
 
@@ -86,6 +93,16 @@ public class GlobalExceptionHandler {
 
     private Result handleErrorResult(String msg) {
         return handleErrorResult(msg, "");
+    }
+
+    private void logStackMsg(Exception e) {
+        StringBuilder sb = new StringBuilder();
+        StackTraceElement[] stackArray = e.getStackTrace();
+        for (StackTraceElement element : stackArray) {
+            sb.append(element.toString()).append("\n");
+        }
+
+        log.error(sb.toString());
     }
 
 }

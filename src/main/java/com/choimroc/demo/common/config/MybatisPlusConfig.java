@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableTransactionManagement
 @Configuration
-//TODO 与application重复
-//@MapperScan("com.choimroc.ipoa.application.*.mapper")
 public class MybatisPlusConfig {
 
     /**
@@ -21,6 +19,8 @@ public class MybatisPlusConfig {
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
+        PaginationInterceptor interceptor = new PaginationInterceptor();
+        interceptor.setOverflow(true);
+        return interceptor;
     }
 }
