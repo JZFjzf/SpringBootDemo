@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.1.7.RELEASE'
+    id 'org.springframework.boot' version '2.2.0.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
 }
@@ -33,13 +33,13 @@ dependencies {
     //分页
 //    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.10'
     //mybatis封装
-    implementation 'com.baomidou:mybatis-plus-boot-starter:3.1.2'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.2.0'
     //代码生成器
-    implementation 'com.baomidou:mybatis-plus-generator:3.1.2'
+    implementation 'com.baomidou:mybatis-plus-generator:3.2.0'
     //模板引擎
     implementation 'org.apache.velocity:velocity-engine-core:2.1'
     //Gson
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
 }
 
 sourceSets {
