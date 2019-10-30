@@ -1,6 +1,8 @@
 package com.choimroc.demo.tool;
 
 import java.time.Clock;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 编号生成工具
@@ -8,16 +10,25 @@ import java.time.Clock;
  * @author choimroc
  * @since 2019/5/2
  */
-public class IdentifierUtils {
-    //上次生成编号的时间截
-    private long cLastTimestamp = -1L;
-    private static IdentifierUtils identifierUtils;
+public class SnUtils {
+    /**
+     * 上次生成的编号时间戳
+     */
+    private static Map<String, Long> last = new HashMap<>();
 
-    public static IdentifierUtils getInstance() {
-        if (identifierUtils == null) {
-            identifierUtils = new IdentifierUtils();
+    static {
+        //需要记录的编号
+        last.put("key1", -1L);
+        last.put("key2", -1L);
+    }
+
+    private static SnUtils snUtils;
+
+    public static SnUtils getInstance() {
+        if (snUtils == null) {
+            snUtils = new SnUtils();
         }
-        return identifierUtils;
+        return snUtils;
     }
 
     private long timeGen() {
@@ -55,10 +66,22 @@ public class IdentifierUtils {
         return timestamp;
     }
 
-    public synchronized String generateCUSNum() {
-        long timestamp = getTimestamp(cLastTimestamp);
+    private String generate(String key) {
+        long timestamp = getTimestamp(last.get(key));
         // 上次生成 ID 的时间截
-        cLastTimestamp = timestamp;
-        return "CUS" + timestamp;
+        last.put(key, timestamp);
+        return key + timestamp;
+    }
+
+    public String generateKey1() {
+        synchronized ("key1") {
+            return generate("key1");
+        }
+    }
+
+    public synchronized String generateKey2() {
+        synchronized ("key2") {
+            return generate("key2");
+        }
     }
 }
