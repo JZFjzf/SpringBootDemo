@@ -1,7 +1,7 @@
 package com.choimroc.demo.tool.menu;
 
 
-import com.choimroc.demo.tool.StringUtils;
+import com.choimroc.demo.tool.ValidatorUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,7 +38,7 @@ public class MenuUtils {
      * 用户菜单
      */
     public static List<MenuTree> parse(List<MenuTree> menuTrees, String menus) {
-        if (menuTrees == null || menuTrees.isEmpty() || StringUtils.isEmpty(menus)) {
+        if (menuTrees == null || menuTrees.isEmpty() || ValidatorUtils.isEmpty(menus)) {
             return new ArrayList<>();
         }
         int maxLevel = getMaxLevel(menuTrees);

@@ -1,4 +1,3 @@
-
 spring:
   profiles:
     active: dev
@@ -6,6 +5,13 @@ spring:
   main:
     allow-bean-definition-overriding: true
     banner-mode: "off"
+  jmx:
+    enabled: false
+  # Multiple Spring Data modules found, entering strict repository configuration mode!
+  data:
+    redis:
+      repositories:
+        enabled: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    type: com.zaxxer.hikari.HikariDataSource

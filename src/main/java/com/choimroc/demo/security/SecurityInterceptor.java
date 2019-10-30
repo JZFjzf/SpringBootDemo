@@ -6,7 +6,7 @@ import com.choimroc.demo.annotation.Permission;
 import com.choimroc.demo.common.exception.CustomException;
 import com.choimroc.demo.tool.CacheUtils;
 import com.choimroc.demo.tool.EncodeUtils;
-import com.choimroc.demo.tool.StringUtils;
+import com.choimroc.demo.tool.ValidatorUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -89,7 +89,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         String token = request.getHeader("token");
         log.debug("token: " + token);
         int userId = 0;
-        if (!StringUtils.isEmpty(token)) {
+        if (ValidatorUtils.isNotBlank(token)) {
             String[] s = token.split("\\.");
             if (s.length == 2) {
                 try {
