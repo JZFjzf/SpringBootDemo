@@ -13,31 +13,26 @@ public class ValidatorUtils {
     /**
      * Is null boolean.
      *
-     * @param obj the obj
+     * @param objects the objects
      * @return the boolean
      */
-    public static boolean isNull(Object obj) {
-        return obj == null;
+    public static boolean isNull(Object ...objects) {
+        for (Object obj : objects) {
+            if (obj == null) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * Is not null boolean.
      *
-     * @param obj the obj
+     * @param objects the objects
      * @return the boolean
      */
-    public static boolean isNotNull(Object obj) {
-        return obj != null;
-    }
-
-    /**
-     * Is not blank boolean.
-     *
-     * @param strings the strings
-     * @return the boolean
-     */
-    public static boolean isNotBlank(String... strings) {
-        return !isBlank(strings);
+    public static boolean nonNull(Object ...objects) {
+        return isNull(objects);
     }
 
     /**
@@ -66,24 +61,39 @@ public class ValidatorUtils {
     }
 
     /**
-     * Is empty boolean.
+     * Is not blank boolean.
      *
-     * @param <E>        the type parameter
-     * @param collection the collection
+     * @param strings the strings
      * @return the boolean
      */
-    public static <E> boolean isEmpty(Collection<E> collection) {
-        return collection.isEmpty();
+    public static boolean nonBlank(String... strings) {
+        return !isBlank(strings);
+    }
+
+    /**
+     * Is empty boolean.
+     *
+     * @param <E>         the type parameter
+     * @param collections the collections
+     * @return the boolean
+     */
+    public static <E> boolean isEmpty(Collection<E>... collections) {
+        for (Collection collection : collections) {
+            if (isNull(collection) || collection.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * Is not empty boolean.
      *
-     * @param <E>        the type parameter
-     * @param collection the collection
+     * @param <E>         the type parameter
+     * @param collections the collections
      * @return the boolean
      */
-    public static <E> boolean isNotEmpty(Collection<E> collection) {
-        return !isEmpty(collection);
+    public static <E> boolean nonEmpty(Collection<E> ...collections) {
+        return !isEmpty(collections);
     }
 }

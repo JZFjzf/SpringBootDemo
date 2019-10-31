@@ -10,5 +10,5 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UserInfo {
-    private int userId;
+    private Long userId;
 }

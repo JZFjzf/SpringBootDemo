@@ -23,21 +23,6 @@ public class RedisUtils {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
-    public String getToken(int userId) {
-        return get(String.valueOf(userId));
-    }
-
-    /**
-     * 刷新token过期时间
-     *
-     * @param userId the user id
-     * @return the boolean
-     */
-    public boolean refreshToken(int userId) {
-        return expire(String.valueOf(userId), 7, TimeUnit.DAYS);
-    }
-
-
     public boolean setCode(String key, String code) {
         return set(key, code, 10, TimeUnit.MINUTES);
     }

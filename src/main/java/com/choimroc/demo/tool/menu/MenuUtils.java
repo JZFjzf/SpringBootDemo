@@ -38,7 +38,7 @@ public class MenuUtils {
      * 用户菜单
      */
     public static List<MenuTree> parse(List<MenuTree> menuTrees, String menus) {
-        if (menuTrees == null || menuTrees.isEmpty() || ValidatorUtils.isEmpty(menus)) {
+        if (menuTrees == null || menuTrees.isEmpty() || ValidatorUtils.isBlank(menus)) {
             return new ArrayList<>();
         }
         int maxLevel = getMaxLevel(menuTrees);

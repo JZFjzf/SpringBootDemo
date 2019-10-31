@@ -14,6 +14,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,9 +60,9 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        int userId = parseToken(request);
+        Long userId = checkToken(request);
         //如果refresh false一般就是key已经失效
-        if (userId == 0 || !cacheUtils.refreshToken(userId)) {
+        if (userId == null || !cacheUtils.refreshToken(userId)) {
             throw new CustomException(401, "身份认证失败,请重新登录", "token已失效");
         }
 
@@ -81,34 +83,39 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-
     /**
-     * 解析token，获取userId
+     * 解析token,获取userId
+     *
+     * @return userId
      */
-    private int parseToken(HttpServletRequest request) {
+    private Long checkToken(HttpServletRequest request) {
         String token = request.getHeader("token");
-        log.debug("token: " + token);
-        int userId = 0;
-        if (ValidatorUtils.isNotBlank(token)) {
-            String[] s = token.split("\\.");
-            if (s.length == 2) {
-                try {
-                    //获取token中的userId
-                    userId = Integer.parseInt(EncodeUtils.base64Encode(s[0]));
-                    //取出redis中的token
-                    String tokenCache = cacheUtils.getToken(userId);
-                    //比较
-                    if (!token.equals(tokenCache)) {
-                        userId = 0;
-                    }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else {
+        if (ValidatorUtils.isBlank(token)) {
             throw new CustomException(401, "请先登录", "token为空");
+        } else {
+            String[] s = token.split("\\.");
+            try {
+                Long userId = Long.parseLong(EncodeUtils.base64Encode(s[0]));
+                //取出redis中的token
+                String tokenCache = cacheUtils.getToken(userId);
+                //比较
+                if (token.equals(tokenCache)) {
+                    return userId;
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
         }
-        return userId;
+        return null;
+    }
+
+
+    private boolean checkPermission(String permissionStr, int permissionId) {
+        if (permissionId != 0) {
+            List<String> permissionList = Arrays.asList(permissionStr.split(","));
+            return permissionList.contains(String.valueOf(permissionId));
+        }
+        return true;
     }
 
 }
