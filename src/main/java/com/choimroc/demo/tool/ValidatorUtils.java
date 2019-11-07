@@ -32,7 +32,7 @@ public class ValidatorUtils {
      * @return the boolean
      */
     public static boolean nonNull(Object ...objects) {
-        return isNull(objects);
+        return !isNull(objects);
     }
 
     /**
