@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.choimroc.demo.application.example.mapper.ExampleMapper">
+
+    <resultMap id="ExampleBody" type="com.choimroc.demo.application.example.body.ExampleBody" />
+
+    <resultMap id="total" type="java.lang.Integer">
+        <result column="total" />
+    </resultMap>
+
+    <select id="selectPage" resultType="java.util.List" resultMap="ExampleBody,total">
+        SELECT SQL_CALC_FOUND_ROWS * FROM `example`
+        WHERE id =#{id}
+        <if test="name!=null">
+            AND u.`name` LIKE concat('%',#{name},'%')
+        </if>
+        order by id DESC
+        LIMIT #{current},#{pageSize};
+
+        SELECT FOUND_ROWS() as total;
+    </select>
+</mapper>
