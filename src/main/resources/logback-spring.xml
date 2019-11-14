@@ -41,32 +41,32 @@
 
     <!--输出到文件 start-->
     <!-- 时间滚动输出 level为 TRACE 日志 -->
-<!--    <appender name="TRACE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-<!--        &lt;!&ndash; 正在记录的日志文件的路径及文件名 &ndash;&gt;-->
-<!--        <file>${log.path}/log_trace.log</file>-->
-<!--        &lt;!&ndash;日志文件输出格式&ndash;&gt;-->
-<!--        <encoder>-->
-<!--            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>-->
-<!--            <charset>UTF-8</charset> &lt;!&ndash; 设置字符集 &ndash;&gt;-->
-<!--        </encoder>-->
-<!--        &lt;!&ndash; 日志记录器的滚动策略，按日期，按大小记录 &ndash;&gt;-->
-<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
-<!--            &lt;!&ndash; 日志归档 &ndash;&gt;-->
-<!--            <fileNamePattern>${log.path}/trace/log-debug-%d{yyyy-MM-dd}.%i.log</fileNamePattern>-->
-<!--            <timeBasedFileNamingAndTriggeringPolicy-->
-<!--                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
-<!--                <maxFileSize>100MB</maxFileSize>-->
-<!--            </timeBasedFileNamingAndTriggeringPolicy>-->
-<!--            &lt;!&ndash;日志文件保留天数&ndash;&gt;-->
-<!--            <maxHistory>15</maxHistory>-->
-<!--        </rollingPolicy>-->
-<!--        &lt;!&ndash; 此日志文件只记录trace级别的 &ndash;&gt;-->
-<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
-<!--            <level>TRACE</level>-->
-<!--            <onMatch>ACCEPT</onMatch>-->
-<!--            <onMismatch>DENY</onMismatch>-->
-<!--        </filter>-->
-<!--    </appender>-->
+    <!--    <appender name="TRACE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--        &lt;!&ndash; 正在记录的日志文件的路径及文件名 &ndash;&gt;-->
+    <!--        <file>${log.path}/log_trace.log</file>-->
+    <!--        &lt;!&ndash;日志文件输出格式&ndash;&gt;-->
+    <!--        <encoder>-->
+    <!--            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>-->
+    <!--            <charset>UTF-8</charset> &lt;!&ndash; 设置字符集 &ndash;&gt;-->
+    <!--        </encoder>-->
+    <!--        &lt;!&ndash; 日志记录器的滚动策略，按日期，按大小记录 &ndash;&gt;-->
+    <!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--            &lt;!&ndash; 日志归档 &ndash;&gt;-->
+    <!--            <fileNamePattern>${log.path}/trace/log-debug-%d{yyyy-MM-dd}.%i.log</fileNamePattern>-->
+    <!--            <timeBasedFileNamingAndTriggeringPolicy-->
+    <!--                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+    <!--                <maxFileSize>100MB</maxFileSize>-->
+    <!--            </timeBasedFileNamingAndTriggeringPolicy>-->
+    <!--            &lt;!&ndash;日志文件保留天数&ndash;&gt;-->
+    <!--            <maxHistory>15</maxHistory>-->
+    <!--        </rollingPolicy>-->
+    <!--        &lt;!&ndash; 此日志文件只记录trace级别的 &ndash;&gt;-->
+    <!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+    <!--            <level>TRACE</level>-->
+    <!--            <onMatch>ACCEPT</onMatch>-->
+    <!--            <onMismatch>DENY</onMismatch>-->
+    <!--        </filter>-->
+    <!--    </appender>-->
 
 
     <!-- 时间滚动输出 level为 DEBUG 日志 -->
@@ -212,25 +212,10 @@
         可以包含零个或多个元素，标识这个appender将会添加到这个logger。
     -->
 
-    <!--    <root level="debug">-->
-    <!--        <appender-ref ref="CONSOLE" />-->
-    <!--        <appender-ref ref="DEBUG_FILE" />-->
-    <!--        <appender-ref ref="INFO_FILE" />-->
-    <!--        <appender-ref ref="WARN_FILE" />-->
-    <!--        <appender-ref ref="ERROR_FILE" />-->
-    <!--    </root>-->
-
     <!--开发环境-->
-    <springProfile name="dev">
-        <root level="INFO">
-            <appender-ref ref="CONSOLE" />
-            <appender-ref ref="DEBUG_FILE" />
-            <appender-ref ref="INFO_FILE" />
-            <appender-ref ref="WARN_FILE" />
-            <appender-ref ref="ERROR_FILE" />
-        </root>
-    </springProfile>
-
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
 
     <!-- 生产环境-->
     <springProfile name="pro">

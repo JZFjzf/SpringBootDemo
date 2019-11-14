@@ -23,15 +23,6 @@ public class RedisUtils {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
-    public boolean setCode(String key, String code) {
-        return set(key, code, 10, TimeUnit.MINUTES);
-    }
-
-
-    public String getCode(String key) {
-        return get(key);
-    }
-
     /**
      * 指定缓存失效时间
      *
@@ -50,7 +41,6 @@ public class RedisUtils {
             return false;
         }
     }
-
 
     /**
      * 判断key是否存在

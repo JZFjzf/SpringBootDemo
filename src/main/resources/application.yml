@@ -1,7 +1,6 @@
 spring:
   profiles:
-    active: dev
-  #      active: pro
+    active: pro
   main:
     allow-bean-definition-overriding: true
     banner-mode: "off"

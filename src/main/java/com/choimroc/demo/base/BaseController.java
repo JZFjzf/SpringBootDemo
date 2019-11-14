@@ -14,15 +14,15 @@ import java.util.List;
  */
 public class BaseController {
     public Result auto(boolean success) {
-        return success ? ok() : badRequest();
+        return success ? success() : failed();
     }
 
-    public Result ok(String msg) {
+    public Result success(String msg) {
         return new Result(200, msg);
     }
 
-    public Result ok() {
-        return ok("成功");
+    public Result success() {
+        return success("成功");
     }
 
     public <T> DataResult<T> data(String msg, T data) {
@@ -59,15 +59,15 @@ public class BaseController {
         return result;
     }
 
-    public Result badRequest(String msg, String error) {
+    public Result failed(String msg, String error) {
         return new ErrorResult(400, msg, error);
     }
 
-    public Result badRequest(String msg) {
-        return badRequest(msg, null);
+    public Result failed(String msg) {
+        return failed(msg, null);
     }
 
-    public Result badRequest() {
-        return badRequest("失败");
+    public Result failed() {
+        return failed("失败");
     }
 }
