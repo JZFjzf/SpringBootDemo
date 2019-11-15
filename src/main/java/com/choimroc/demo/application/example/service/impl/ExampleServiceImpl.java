@@ -7,6 +7,7 @@ import com.choimroc.demo.application.example.entity.Example;
 import com.choimroc.demo.application.example.mapper.ExampleMapper;
 import com.choimroc.demo.application.example.service.ExampleService;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,5 +44,20 @@ public class ExampleServiceImpl extends ServiceImpl<ExampleMapper, Example> impl
         page.setPages(total / pageSize + 1);
         page.setRecords(list);
         return page;
+    }
+
+    @Override
+    public boolean updateBatch(List<Example> examples) {
+        if (examples == null) {
+            return false;
+        }
+        try (SqlSession batchSqlSession = sqlSessionBatch()) {
+            ExampleMapper mapper = batchSqlSession.getMapper(ExampleMapper.class);
+            for (Example item : examples) {
+                mapper.updateExample(item);
+            }
+            batchSqlSession.flushStatements();
+        }
+        return true;
     }
 }

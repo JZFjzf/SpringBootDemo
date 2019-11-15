@@ -18,6 +18,7 @@ import ${superControllerClassPackage};
  * @author ${author}
  * @since ${date}
  */
+@Validated
 #if(${restControllerStyle})
 @RestController
 #else

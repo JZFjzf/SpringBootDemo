@@ -18,4 +18,8 @@ public interface ExampleMapper extends BaseMapper<Example> {
             @Param("current") Long current,
             @Param("pageSize") Long pageSize
     );
+
+    int insertReturnKey(Example example);
+
+    int updateExample(Example example);
 }
