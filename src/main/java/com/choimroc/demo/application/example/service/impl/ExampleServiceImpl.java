@@ -60,4 +60,9 @@ public class ExampleServiceImpl extends ServiceImpl<ExampleMapper, Example> impl
         }
         return true;
     }
+
+    @Override
+    public boolean saveReturnKey(Example example) {
+        return exampleMapper.insertReturnKey(example) > 0;
+    }
 }

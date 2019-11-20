@@ -14,4 +14,6 @@ public interface ExampleService extends IService<Example> {
     IPage<Example> getList(Long pageNumber,Long pageSize);
 
     boolean updateBatch(List<Example> shelfUpdateBodies);
+
+    boolean saveReturnKey(Example example);
 }
