@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Repository
 public interface ExampleMapper extends BaseMapper<Example> {
-    List<List<?>> selectPage(
+    List<List<?>> selectForPage(
             @Param("current") Long current,
             @Param("pageSize") Long pageSize
     );
