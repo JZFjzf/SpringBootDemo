@@ -19,8 +19,6 @@ public class MybatisPlusConfig {
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor interceptor = new PaginationInterceptor();
-        interceptor.setOverflow(true);
-        return interceptor;
+        return new PaginationInterceptor();
     }
 }

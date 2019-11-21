@@ -31,7 +31,7 @@ public class ExampleServiceImpl extends ServiceImpl<ExampleMapper, Example> impl
         List<List<?>> objects;
         List<Example> list = new ArrayList<>();
         Integer total = 0;
-        objects = exampleMapper.selectPage((pageNumber - 1) * pageSize, pageSize);
+        objects = exampleMapper.selectForPage((pageNumber - 1) * pageSize, pageSize);
 
         if (objects != null) {
             total = (Integer) objects.get(1).get(0);
