@@ -16,7 +16,10 @@ import java.util.List;
 public interface ExampleMapper extends BaseMapper<Example> {
     List<List<?>> selectForPage(
             @Param("current") Long current,
-            @Param("pageSize") Long pageSize
+            @Param("pageSize") Long pageSize,
+            @Param("startDate") String startDate,
+            @Param("endDate") String endDate
+
     );
 
     int insertReturnKey(Example example);

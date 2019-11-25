@@ -10,15 +10,25 @@
     <update id="updateExample"></update>
 
     <select id="selectForPage" resultType="java.util.List" resultMap="ExampleBody,total">
+        <![CDATA[
+
         SELECT SQL_CALC_FOUND_ROWS * FROM `example`
         WHERE id =#{id}
         <if test="name!=null and name!=''">
-            AND u.`name` LIKE concat('%',#{name},'%')
+            AND `name` LIKE concat('%',#{name},'%')
+        </if>
+        <if test="startDate!=null and startDate!=''">
+            AND create_time>=#{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            AND create_time < #{endDate}
         </if>
         order by id DESC
         LIMIT #{current},#{pageSize};
 
         SELECT FOUND_ROWS() as total;
+
+        ]]>
     </select>
 
     <insert id="insertReturnKey"
