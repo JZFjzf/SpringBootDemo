@@ -1,5 +1,7 @@
 package com.choimroc.demo.tool;
 
+import com.choimroc.demo.common.exception.CustomException;
+
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -136,5 +138,30 @@ public class DateTimeUtils {
      */
     public static LocalDate parseDate(String date) {
         return parseDate(date, DEFAULT_DATE_FORMATS);
+    }
+
+    public static void checkDateTime(String datetime, String format) {
+        try {
+            parseDateTime(datetime, format);
+        } catch (Exception e) {
+            throw new CustomException("日期格式必须是" + format);
+        }
+    }
+
+    public static void checkDateTime(String datetime) {
+        checkDateTime(datetime, DEFAULT_DATETIME_FORMATS);
+    }
+
+
+    public static void checkDate(String date, String format) {
+        try {
+            parseDate(date, format);
+        } catch (Exception e) {
+            throw new CustomException("日期格式必须是" + format);
+        }
+    }
+
+    public static void checkDate(String date) {
+        checkDate(date, DEFAULT_DATE_FORMATS);
     }
 }

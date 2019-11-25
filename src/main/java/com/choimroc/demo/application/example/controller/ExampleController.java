@@ -76,8 +76,8 @@ public class ExampleController extends BaseController {
         return page(exampleService.getList(pageNumber, pageSize, startDate, endDate));
     }
 
-    @GetMapping("getForTime")
-    public Result getForTime(
+    @GetMapping("getForDate")
+    public Result getForDate(
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate) {
         //大于或等于 startDate 小于 endDate
