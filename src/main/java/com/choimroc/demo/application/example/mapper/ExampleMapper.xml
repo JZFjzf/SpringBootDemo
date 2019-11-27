@@ -7,28 +7,41 @@
     <resultMap id="total" type="java.lang.Integer">
         <result column="total" />
     </resultMap>
+
     <update id="updateExample"></update>
 
-    <select id="selectForPage" resultType="java.util.List" resultMap="ExampleBody,total">
-        <![CDATA[
-
+    <select id="selectByPage" resultType="java.util.List" resultMap="ExampleBody,total">
         SELECT SQL_CALC_FOUND_ROWS * FROM `example`
         WHERE id =#{id}
         <if test="name!=null and name!=''">
             AND `name` LIKE concat('%',#{name},'%')
         </if>
         <if test="startDate!=null and startDate!=''">
-            AND create_time>=#{startDate}
+            AND create_time >= #{startDate}
         </if>
         <if test="endDate!=null and endDate!=''">
-            AND create_time < #{endDate}
+            AND create_time &lt; #{endDate}
         </if>
+        <choose>
+            <when test="level==1">
+
+            </when>
+            <otherwise>
+
+            </otherwise>
+        </choose>
         order by id DESC
         LIMIT #{current},#{pageSize};
 
         SELECT FOUND_ROWS() as total;
+    </select>
 
-        ]]>
+    <select id="selectByIds" resultType="com.choimroc.demo.application.example.entity.Example">
+        SELECT * FROM example
+        WHERE `name`=#{name} AND id IN
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
     </select>
 
     <insert id="insertReturnKey"

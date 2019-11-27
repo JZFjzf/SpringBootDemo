@@ -11,7 +11,7 @@ import java.util.List;
  * @since 2019/10/17
  */
 public interface ExampleService extends IService<Example> {
-    IPage<Example> getList(Long pageNumber, Long pageSize, String startDate, String endDate);
+    IPage<Example> getByPage(Long pageNumber, Long pageSize, String startDate, String endDate);
 
     boolean updateBatch(List<Example> shelfUpdateBodies);
 

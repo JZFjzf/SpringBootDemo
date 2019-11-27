@@ -33,7 +33,6 @@ public class ExampleController extends BaseController {
     private final ExampleService exampleService;
     private final TransactionTemplate transactionTemplate;
 
-
     @Autowired
     public ExampleController(ExampleService exampleService, TransactionTemplate transactionTemplate) {
         this.exampleService = exampleService;
@@ -73,7 +72,7 @@ public class ExampleController extends BaseController {
             @NotNull(message = "{parameter.notNull.pageSize}") Long pageSize,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate) {
-        return page(exampleService.getList(pageNumber, pageSize, startDate, endDate));
+        return page(exampleService.getByPage(pageNumber, pageSize, startDate, endDate));
     }
 
     @GetMapping("getForDate")

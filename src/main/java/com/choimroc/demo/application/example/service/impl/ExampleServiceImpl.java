@@ -27,11 +27,11 @@ public class ExampleServiceImpl extends ServiceImpl<ExampleMapper, Example> impl
     }
 
     @Override
-    public IPage<Example> getList(Long pageNumber, Long pageSize,String startDate,String endDate) {
+    public IPage<Example> getByPage(Long pageNumber, Long pageSize, String startDate, String endDate) {
         List<List<?>> objects;
         List<Example> list = new ArrayList<>();
         Integer total = 0;
-        objects = exampleMapper.selectForPage((pageNumber - 1) * pageSize, pageSize,startDate,endDate);
+        objects = exampleMapper.selectByPage((pageNumber - 1) * pageSize, pageSize,startDate,endDate);
 
         if (objects != null) {
             total = (Integer) objects.get(1).get(0);

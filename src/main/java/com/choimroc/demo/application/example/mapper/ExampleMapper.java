@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Repository
 public interface ExampleMapper extends BaseMapper<Example> {
-    List<List<?>> selectForPage(
+    List<List<?>> selectByPage(
             @Param("current") Long current,
             @Param("pageSize") Long pageSize,
             @Param("startDate") String startDate,
@@ -25,4 +25,9 @@ public interface ExampleMapper extends BaseMapper<Example> {
     int insertReturnKey(Example example);
 
     int updateExample(Example example);
+
+    List<Example> selectByIds(
+            @Param("name") String name,
+            @Param("ids") Long[] ids
+    );
 }
