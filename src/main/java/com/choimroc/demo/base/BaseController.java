@@ -48,7 +48,7 @@ public class BaseController {
         return result;
     }
 
-    public <T> PageResult<T> page(IPage page, T data) {
+    public <T> PageResult<T> page(IPage<?> page, T data) {
         PageResult<T> result = new PageResult<>();
         result.setCode(200);
         result.setMsg("成功");
