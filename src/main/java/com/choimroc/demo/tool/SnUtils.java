@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 编号生成工具
+ * 编号生成工具(时间戳序列)
  *
  * @author choimroc
  * @since 2019/5/2
