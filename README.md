@@ -40,10 +40,10 @@ dependencies {
 > PS:使用war包部署时，建议将`version`置空
 
 ## 二、使用说明
-1、`com.choimroc.demo.tool`包说明
+1、`com.choimroc.mybatisplusdemo.tool`包说明
 
 2、权限验证
-- 验证文件为`com.choimroc.demo.security.SecurityInterceptor`,需要自行修改为自己项目的验证逻辑
+- 验证文件为`com.choimroc.mybatisplusdemo.security.SecurityInterceptor`,需要自行修改为自己项目的验证逻辑
 。使用`@IgnoreSecurity`注解过滤掉不需要进行权限验证的接口
 - 
 
