@@ -36,12 +36,15 @@ dependencies {
 //    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.10'
     //mybatis封装
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.2.0'
+    implementation 'org.apache.poi:poi:4.1.0'
+    implementation 'org.apache.poi:poi-ooxml:4.1.0'
     //代码生成器
     implementation 'com.baomidou:mybatis-plus-generator:3.2.0'
     //模板引擎
     implementation 'org.apache.velocity:velocity-engine-core:2.1'
     //Gson
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 
 sourceSets {

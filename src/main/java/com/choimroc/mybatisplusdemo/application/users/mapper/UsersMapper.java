@@ -1,15 +1,19 @@
 package com.choimroc.mybatisplusdemo.application.users.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.choimroc.mybatisplusdemo.application.users.entity.Users;
+import com.choimroc.mybatisplusdemo.application.users.entity.UsersEntity;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 表示此接口为操作数据库的Mapper接口
  * @Mapper
  */
 @Repository
-public interface UsersMapper extends BaseMapper<Users> {
+public interface UsersMapper extends BaseMapper<UsersEntity> {
     //
 //    /**
 //     * 插入一个用户
@@ -57,7 +61,7 @@ public interface UsersMapper extends BaseMapper<Users> {
 //
 //
 //
-//    List<Users> queryUsers(String userid, String username, Long starttime, Long endtime);
+    List<UsersEntity> queryUsers(@Param("user_id")String userId, @Param("username")String username, @Param("start_time")Long startTime, @Param("end_time")Long endTime);
 //
 //    @Delete("delete from studentrecord")
 //    int deleteStudentInfo();
@@ -68,6 +72,6 @@ public interface UsersMapper extends BaseMapper<Users> {
 //    List<UserRecord> queryUserRecordByuserid(String userid,String course);
 //
 //    List<UserRecord> queryUserRecord(String userid,String username,String course,String coursesum,Long starttime,Long endtime);
-//    @Select("select * from ( select * from users order by times desc limit 100000 ) as t group by userid")
-//    List<Users> queryUsersAll();
+    @Select("select * from ( select * from users order by times desc limit 100000 ) as t group by id,user_id")
+    List<UsersEntity> queryUsersAll();
 }

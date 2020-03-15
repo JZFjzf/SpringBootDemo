@@ -33,6 +33,15 @@ public class BaseController {
         return result;
     }
 
+    public <T> DataResult<T> data(String msg,String title, T data) {
+        DataResult<T> result = new DataResult<>();
+        result.setCode(200);
+        result.setMsg(msg);
+        result.setTitle(title);
+        result.setData(data);
+        return result;
+    }
+
     public <T> DataResult<T> data(T data) {
         return data("成功", data);
     }

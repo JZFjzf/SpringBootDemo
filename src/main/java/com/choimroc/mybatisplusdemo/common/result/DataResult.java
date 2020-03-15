@@ -13,4 +13,5 @@ import lombok.Setter;
 @Setter
 public class DataResult<T> extends Result {
     private T data;
+    private String title;
 }

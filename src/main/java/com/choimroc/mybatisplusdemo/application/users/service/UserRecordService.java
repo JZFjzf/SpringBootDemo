@@ -1,11 +1,15 @@
 package com.choimroc.mybatisplusdemo.application.users.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.choimroc.mybatisplusdemo.application.users.entity.UserRecord;
+import com.choimroc.mybatisplusdemo.application.student.entity.CourseInfoEntity;
+import com.choimroc.mybatisplusdemo.application.student.entity.InquireEntity;
+import com.choimroc.mybatisplusdemo.application.users.entity.UserRecordEntity;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.util.List;
 
-public interface UserRecordService extends IService<UserRecord> {
-    UserRecord addUserRecord( String course, String courseSum, MultipartFile imgFile) throws Exception;
+public interface UserRecordService extends IService<UserRecordEntity> {
+    UserRecordEntity addUserRecord(CourseInfoEntity courseInfoEntity, String courseSum, MultipartFile imgFile) throws Exception;
+    void updateUserRecord(String course,String totalCourse);
+    List<UserRecordEntity> getUserRecords(InquireEntity inquireEntity);
 }

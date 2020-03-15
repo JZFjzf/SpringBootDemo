@@ -1,7 +1,10 @@
 package com.choimroc.mybatisplusdemo.tool;
 
 import com.choimroc.mybatisplusdemo.common.exception.CustomException;
+import org.apache.commons.lang3.StringUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -164,4 +167,12 @@ public class DateTimeUtils {
     public static void checkDate(String date) {
         checkDate(date, DEFAULT_DATE_FORMATS);
     }
+
+    public static long getMilliseconds(String date) throws ParseException {
+        if (StringUtils.isNotBlank(date)) {
+            return new SimpleDateFormat("yyyy-MM-dd").parse(date).getTime();
+        }
+        return 0;
+    }
+
 }
